@@ -1,0 +1,47 @@
+﻿<Window x:Class="DatabaseSyncApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseSyncApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Time Interval Input Section -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label Content="Sync Interval (Seconds): " Margin="0,0,5,0"/>
+            <TextBox Name="IntervalTextBox" Width="50" HorizontalAlignment="Left"/>
+            <Button Content="Confirm" Width="75" Margin="10,0,0,0" Click="SetInterval_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Content="Fetch and Sync Now" Width="150" Click="SyncDatabase"/>
+            <Label Name="StatusLabel" Content="Status: " Margin="10,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" Name="CustomerDataGrid" AutoGenerateColumns="False" IsReadOnly="True" RowDetailsVisibilityMode="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*"/>
+            </DataGrid.Columns>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid ItemsSource="{Binding Locations}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Location ID" Binding="{Binding LocationId}" MinWidth="200"/>
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}" MinWidth="200"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </Grid>
+</Window>
